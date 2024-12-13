@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kopi Resstu tarakan</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,300;0,400;0,700;1,700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <!-- Link CSS -->
+    <link rel="stylesheet" href="css/style.css" />
+
+    <!-- alpineJS -->
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+
+    <!-- APP -->
+    <script src="src/app.js" async></script>
+  </head>
+  <body>
+    <!-- Navbar start -->
+    <nav class="navbar" x-data>
+      <a href="#" class="navbar-logo">Restu<span>Coffe</span>.</a>
+
+      <div class="navbar-nav">
+        <a href="#home">Home</a>
+        <a href="#about">Tentang Kami</a>
+        <a href="#menu">Menu</a>
+        <a href="#products">Produk</a>
+        <a href="#contact">Kontak</a>
+      </div>
+
+      <div class="navbar-extra">
+        <a href="#" id="shopping-cart-button"
+          ><i data-feather="shopping-cart"></i>
+          <span
+            class="quantity-badge"
+            x-show="$store.cart.quantity"
+            x-text="$store.cart.quantity"
+          ></span
+        ></a>
+        <a href="#" id="hamburger-menu"><i data-feather="menu"></i></a>
+      </div>
+
+      <!-- shopping cart start -->
+      <div class="shopping-cart">
+        <template x-for="(item, index) in $store.cart.items" x-keys="index">
+          <div class="cart-item">
+            <img :src="`img/menu/${item.img}`" :alt="item.name" />
+            <div class="item-detail">
+              <h3 x-text="item.name"></h3>
+              <div class="item-price">
+                <span x-text="rupiah(item.price)"></span> &times;
+                <button id="remove" @click="$store.cart.remove(item.id)">
+                  &minus;
+                </button>
+                <span x-text="item.quantity"></span>
+                <button id="add" @click="$store.cart.add(item)">&plus;</button>
+                &equals;
+                <span x-text="rupiah(item.total)"></span>
+              </div>
+            </div>
+          </div>
+        </template>
+        <h4 x-show="!$store.cart.items.length" style="margin-top: 1rem">
+          Cart Is Empty
+        </h4>
+        <h4 x-show="$store.cart.items.length">
+          total : <span x-text="rupiah($store.cart.total)"></span>
+        </h4>
+
+        <div class="form-container" x-show="$store.cart.items.length">
+          <form action="" id="checkoutform">
+            <input
+              type="hidden"
+              name="items"
+              x-model="JSON.stringify($store.cart.items)"
+            />
+            <input type="hidden" name="total" x-model="$store.cart.total" />
+            <h5>Costumer Detail</h5>
+            <lebel for="name">
+              <span>Name</span>
+              <input type="text" name="name" id="name" />
+            </lebel>
+
+            <lebel for="email">
+              <span>Email</span>
+              <input type="text" name="email" id="emial" />
+            </lebel>
+
+            <lebel for="phone">
+              <span>Phone</span>
+              <input type="number" name="phone" id="phone" autocomplete="off" />
+            </lebel>
+
+            <button
+              class="checkout-button disabled"
+              type="submit"
+              id="chekout-button"
+              value="checkout"
+            >
+              CheckOut
+            </button>
+          </form>
+        </div>
+      </div>
+      <!-- shopping cart and -->
+    </nav>
+
+    <!-- Navbar end -->
+
+    <!-- Hero Section Start -->
+    <section class="hero" id="home">
+      <main class="content">
+        <h1>Mari Nikmati Secangkir <span>Kopi</span></h1>
+      </main>
+    </section>
+    <!-- Hero Section end -->
+
+    <!-- about section start -->
+    <section id="about" class="about">
+      <h2><span>Tentang</span> Kami</h2>
+
+      <div class="row">
+        <div class="about-img">
+          <img src="img/tentang-kami.jpg" alt="tentang kami" />
+        </div>
+        <div class="content">
+          <h3>Kenapa Memilih Kopi Kami?</h3>
+          <p>
+            Manfaat kesehatan: Kopi mengandung kafein yang memiliki banyak
+            manfaat kesehatan, seperti menurunkan risiko Alzheimer dan kanker
+            otak, meningkatkan konsentrasi, dan menjaga kesehatan jantung.
+            Membahagiakan: Kafein dalam kopi dapat meningkatkan produksi dopamin
+            yang membuat orang merasa bahagia. Mempererat pertemanan: Kopi dapat
+            mencairkan kekakuan dan mempererat jalinan pertemanan.
+          </p>
+          <p></p>
+        </div>
+      </div>
+    </section>
+    <!-- about section and -->
+
+    <!-- menu section start -->
+    <section id="menu" class="menu">
+      <h2><span>Menu</span> Kami</h2>
+
+      <div class="row">
+        <div class="menu-card">
+          <img src="img/menu/1.jpg" alt="espresso" class="menu-card-img" />
+          <h3 class="menu-card-tile">- Espresso -</h3>
+          <p class="menu-card-price">IDR 15K</p>
+        </div>
+
+        <div class="menu-card">
+          <img src="img/menu/1.jpg" alt="espresso" class="menu-card-img" />
+          <h3 class="menu-card-tile">- Hazellnut coffe -</h3>
+          <p class="menu-card-price">IDR 15K</p>
+        </div>
+
+        <div class="menu-card">
+          <img src="img/menu/1.jpg" alt="espresso" class="menu-card-img" />
+          <h3 class="menu-card-tile">- Americano -</h3>
+          <p class="menu-card-price">IDR 15K</p>
+        </div>
+
+        <div class="menu-card">
+          <img src="img/menu/1.jpg" alt="espresso" class="menu-card-img" />
+          <h3 class="menu-card-tile">- V60 -</h3>
+          <p class="menu-card-price">IDR 15K</p>
+        </div>
+      </div>
+    </section>
+    <!-- menu section and -->
+
+    <!-- products section start -->
+    <section class="products" id="products" x-data="products">
+      <h2><span>Produk Unggulan</span> Kami</h2>
+
+      <div class="row">
+        <template x-for="(item, index) in items" x-key="index">
+          <div class="product-card">
+            <div class="product-icons">
+              <a href="#" @click.prevent="$store.cart.add(item)"
+                ><i data-feather="shopping-cart"></i
+              ></a>
+            </div>
+            <div class="product-image">
+              <img :src="`img/menu/${item.img}`" :alt="item.name" />
+            </div>
+            <div class="product-content">
+              <h3 x-text="item.name"></h3>
+              <div class="product-price">
+                <span x-text="rupiah(item.price)"></span>
+              </div>
+            </div>
+          </div>
+        </template>
+      </div>
+    </section>
+
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        feather.replace();
+      });
+    </script>
+
+    <!-- products section and -->
+
+    <!-- contact section start -->
+    <section id="contact" class="contact">
+      <h2><span>Kontak</span> Kami</h2>
+
+      <div class="row">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d127455.34519523216!2d117.4953065598158!3d3.355154587948913!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x32138bb6231349ad%3A0xe8d9849640f31b7e!2sTarakan%2C%20Kota%20Tarakan%2C%20Kalimantan%20Utara!5e0!3m2!1sid!2sid!4v1731680186686!5m2!1sid!2sid"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          class="map"
+        ></iframe>
+
+        <form action="">
+          <div class="input-group">
+            <i data-feather="user"></i>
+            <input type="text" placeholder="nama" />
+          </div>
+          <div class="input-group">
+            <i data-feather="mail"></i>
+            <input type="text" placeholder="email" />
+          </div>
+          <div class="input-group">
+            <i data-feather="phone"></i>
+            <input type="text" placeholder="no Hp" />
+          </div>
+          <button type="submit" class="btn">Kirim Pesan</button>
+        </form>
+      </div>
+    </section>
+    <!-- contact section and -->
+
+    <!-- footer start -->
+    <footer>
+      <div class="social">
+        <a href="#"><i data-feather="instagram"></i></a>
+        <a href="#"><i data-feather="twitter"></i></a>
+        <a href="#"><i data-feather="facebook"></i></a>
+      </div>
+
+      <div class="links">
+        <a href="#home">Home</a>
+        <a href="#about">Tentang Kami</a>
+        <a href="#menu">Menu</a>
+        <a href="#contact">Kontak</a>
+      </div>
+
+      <div class="credit">
+        <p>Creted by <a href="">Kelompok 8</a>. | &copy; 2024</p>
+      </div>
+    </footer>
+    <!-- footer and -->
+
+    <!-- modal box item detail start -->
+    <div class="modal" id="item-detail-modal">
+      <div class="modal-container">
+        <a href="#" class="close-icon"><i data-feather="x"></i></a>
+        <div class="modal-content">
+          <img src="img/menu/1.jpg" alt="product 1" />
+          <div class="product-content">
+            <h3>Product 1</h3>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum
+              dolores porro ullam nostrum eveniet repudiandae explicabo ab?
+              Blanditiis est dolorem, nisi quidem asperiores harum ullam.
+            </p>
+            <div class="product-stars">
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star"></i>
+            </div>
+            <div class="product-price">IDR 30K <span>IDR 55k</span></div>
+            <a href="#"
+              ><i data-feather="shopping-cart"></i><span>add to cart</span></a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- modal box item detail and -->
+
+    <!-- feather icons -->
+    <script>
+      feather.replace();
+    </script>
+
+    <!-- my javescript -->
+    <script src="js/script.js"></script>
+  </body>
+</html>
